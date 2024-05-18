@@ -1,6 +1,6 @@
 import { Button, Card, Input } from "@nextui-org/react";
 import { CheckIcon, ClipIcon, CopyIcon, InfoIcon, VerifyIcon, WarningIcon } from "../icons";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import cn from "classnames";
 
 function validURL(str: string) {
@@ -26,16 +26,19 @@ const Form = () => {
   const [link, setLink] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
+  const pasteBtnRef = useRef(null);
 
   const copyFromClipboard = useCallback(async () => {
     try {
       const text = await navigator.clipboard.readText();
       setLink(text);
       setIsInvalid(!validURL(text));
+      setIsFocused(false);
     } catch (err) {
       console.error(err);
       setLink("");
       setIsInvalid(false);
+      setIsFocused(false);
     }
   }, []);
 
@@ -53,9 +56,14 @@ const Form = () => {
         size={"lg"}
         variant={"faded"}
         value={link}
-        onFocusChange={(isFocused) => {
-          setIsFocused(isFocused);
-          if (!isFocused) setIsInvalid(!validURL(link));
+        onFocus={() => {
+          setIsFocused(true);
+        }}
+        onBlur={(e) => {
+          if (e.relatedTarget && pasteBtnRef.current == e.relatedTarget)
+            return;
+          setIsFocused(false);
+          setIsInvalid(!validURL(link))
         }}
         onValueChange={setLink}
         classNames={{
@@ -66,6 +74,7 @@ const Form = () => {
         placeholder="https://"
         endContent={
           isFocused || link === "" ? <Button
+            ref={pasteBtnRef}
             onMouseDown={(e) => e.preventDefault()}
             onClick={copyFromClipboard}
             className={"bg-Nero bg-opacity-10 text-[10px] text-Nero font-medium h-auto px-6 py-2"}
