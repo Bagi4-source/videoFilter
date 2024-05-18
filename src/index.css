@@ -60,7 +60,7 @@
 }
 
 :root {
-    font-family: MTSExtended, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: MTSExtended, system-ui, Avenir, Helvetica, Arial, sans-serif;
     color-scheme: dark;
     color: rgba(255, 255, 255, 0.87);
     background-color: black;
