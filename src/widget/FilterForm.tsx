@@ -100,7 +100,7 @@ const Form = () => {
 };
 
 export const FilterForm = () => {
-  return <section className={"p-4 flex flex-col gap-6"}>
+  return <section className={"p-4 flex flex-col gap-6 container mx-auto"}>
     <Card className={"bg-ShuttleGray text-Nero flex flex-row flex-nowrap items-center gap-6 p-5"}>
       <div className={"p-1"}>
         <InfoIcon />

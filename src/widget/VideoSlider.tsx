@@ -1,4 +1,4 @@
 export const VideoSlider = () => {
-  return <>
-  </>
+  return <section className={"container mx-auto"}>
+  </section>
 }
