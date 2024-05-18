@@ -4,28 +4,28 @@
 
 @font-face {
     font-family: "MTSExtended";
-    src: url("src/fonts/MTSExtended-Regular.ttf") format("truetype");
+    src: url("../public/fonts/MTSExtended-Regular.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: "MTSExtended";
-    src: url("src/fonts/MTSExtended-Medium.ttf") format("truetype");
+    src: url("../public/fonts/MTSExtended-Medium.ttf") format("truetype");
     font-weight: 500;
     font-style: normal;
 }
 
 @font-face {
     font-family: "MTSExtended";
-    src: url("src/fonts/MTSExtended-Bold.ttf") format("truetype");
+    src: url("../public/fonts/MTSExtended-Bold.ttf") format("truetype");
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: "MTSExtended";
-    src: url("src/fonts/MTSExtended-Black.ttf") format("truetype");
+    src: url("../public/fonts/MTSExtended-Black.ttf") format("truetype");
     font-weight: 900;
     font-style: normal;
 }
