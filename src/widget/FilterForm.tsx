@@ -105,9 +105,8 @@ export const FilterForm = () => {
       <div className={"p-1"}>
         <InfoIcon />
       </div>
-      <div className="text-[12px] text-center">
-        Вставьте ссылку в поле ниже<br />
-        или загрузите видео с устройства
+      <div className="text-[12px] text-center w-full">
+        Вставьте ссылку в поле ниже или загрузите видео с устройства
       </div>
     </Card>
     <Form />
@@ -115,10 +114,8 @@ export const FilterForm = () => {
       <div className={"p-1"}>
         <VerifyIcon />
       </div>
-      <div className="text-[12px] text-center">
-        Также вы можете воспользоваться <br />
-        демонстрационными образцами <br />
-        из разных категорий контента
+      <div className="text-[12px] text-center w-full">
+        Также вы можете воспользоваться демонстрационными образцами из разных категорий контента
       </div>
     </Card>
   </section>;
