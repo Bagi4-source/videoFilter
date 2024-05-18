@@ -20,6 +20,7 @@ export default {
         SilverChalice: "#A1A1A1",
         ElectricViolet: "#5C28F9",
         Warning: "#FF4747",
+        CodGray: "#1D1D1D",
       },
     },
   },

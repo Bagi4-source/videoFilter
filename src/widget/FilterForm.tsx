@@ -1,7 +1,18 @@
-import { Button, Card, Input } from "@nextui-org/react";
+import {
+  Button,
+  Card,
+  Input,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import { CheckIcon, ClipIcon, CopyIcon, InfoIcon, VerifyIcon, WarningIcon } from "../icons";
 import { useCallback, useRef, useState } from "react";
 import cn from "classnames";
+import { Gauge } from "../components";
 
 function validURL(str: string) {
   if (str === "") return true;
@@ -23,6 +34,7 @@ const CheckContent = ({ isInvalid }: { isInvalid: boolean }) => {
 };
 
 const Form = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [link, setLink] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -63,7 +75,7 @@ const Form = () => {
           if (e.relatedTarget && pasteBtnRef.current == e.relatedTarget)
             return;
           setIsFocused(false);
-          setIsInvalid(!validURL(link))
+          setIsInvalid(!validURL(link));
         }}
         onValueChange={setLink}
         classNames={{
@@ -91,11 +103,44 @@ const Form = () => {
     <Button
       disabled={isInvalid}
       size={"lg"}
+      onClick={onOpen}
       className={"bg-ElectricViolet text-Nero font-[16px] font-bold disabled:text-SilverChalice disabled:bg-Nero disabled:bg-opacity-10"}
       variant="flat"
       aria-label="Start check">
       Запустить проверку
     </Button>
+    <Modal
+      isOpen={isOpen}
+      backdrop={"blur"}
+      onOpenChange={onOpenChange}
+      className={"bg-CodGray"}
+    >
+      <ModalContent className={"p-2"}>
+        {(onClose) => (
+          <>
+            <ModalHeader className={"font-black text-[20px]"}>
+              Результат
+            </ModalHeader>
+            <ModalBody className={"flex flex-col gap-2 items-center"}>
+              <div className={"text-[14px] w-full"}>Насколько видео безопасно для детей?</div>
+              <div className={"w-full -translate-x-1"}>
+                <Gauge value={95} />
+              </div>
+              <div className={"text-[18px] font-medium"}>Дата последней проверки</div>
+              <div className={"text-[16px]"}>19 мая 2024 года в 02:24</div>
+            </ModalBody>
+            <ModalFooter className={"flex flex-col gap-2 items-center"}>
+              <Button className={"bg-ElectricViolet text-white text-[16px] font-bold w-full"} onPress={onClose}>
+                Перейти к видео
+              </Button>
+              <Button className={"bg-none text-white text-[16px] font-bold w-full"} variant="light" onPress={onClose}>
+                Перепроверить
+              </Button>
+            </ModalFooter>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
   </>;
 };
 

@@ -8,13 +8,13 @@ import {
 import { useState } from "react";
 import cn from "classnames";
 
-const items = [
-  "Владимир Матлахов",
-  "Герман Багдасарян",
-  "Иван Шкель",
-  "Эдуард Захарян",
-  "Глеб Мисюк",
-];
+const items = {
+  "Владимир Матлахов": "#",
+  "Герман Багдасарян": "https://t.me/debagi4",
+  "Иван Шкель": "#",
+  "Эдуард Захарян": "#",
+  "Глеб Мисюк": "#",
+};
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,7 +31,7 @@ export const Header = () => {
     >
       <NavbarContent className="md:hidden">
         <div className={"sm:px-4 container mx-auto flex flex-row flex-nowrap justify-between items-center"}>
-          <h2 className={"font-black text-[20px] pt-1"}>{isMenuOpen ? "Меню" : "Проверка видео"}</h2>
+          <h2 className={"font-black text-[20px] pt-1"}>{isMenuOpen ? "Над кейсом работали" : "Проверка видео"}</h2>
           <NavbarMenuToggle
             className={cn("p-4 scale-125")}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
@@ -46,21 +46,15 @@ export const Header = () => {
 
       <NavbarMenu className={"justify-between items-center"}>
         <div className={"flex flex-col gap-14 mt-[60px] px-12 w-full font-medium"}>
-          <Link
-            className="w-full text-Nero font-[20px]"
-            href="#"
-            size="lg"
-          >
-            Для вас старались:
-          </Link>
-          {items.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
+          {Object.entries(items).map(([name, link], index) => (
+            <NavbarMenuItem key={index}>
               <Link
                 className="w-full text-Nero font-[20px]"
-                href="#"
+                href={link}
+                target={"_blank"}
                 size="lg"
               >
-                {item}
+                {name}
               </Link>
             </NavbarMenuItem>
           ))}
