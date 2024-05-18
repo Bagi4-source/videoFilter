@@ -10,9 +10,10 @@ import {
   useDisclosure,
 } from "@nextui-org/react";
 import { CheckIcon, ClipIcon, CopyIcon, InfoIcon, VerifyIcon, WarningIcon } from "../icons";
-import { useCallback, useRef, useState } from "react";
+import { FormEvent, useCallback, useRef, useState } from "react";
 import cn from "classnames";
 import { Gauge } from "../components";
+import axios from "axios";
 
 function validURL(str: string) {
   if (str === "") return true;
@@ -39,6 +40,7 @@ const Form = () => {
   const [isInvalid, setIsInvalid] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const pasteBtnRef = useRef(null);
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const copyFromClipboard = useCallback(async () => {
     try {
@@ -54,9 +56,33 @@ const Form = () => {
     }
   }, []);
 
+  const handleFileChange = async (e: FormEvent<HTMLInputElement>) => {
+    if (!e.currentTarget.files || e.currentTarget.files.length === 0) return;
+
+    const file = e.currentTarget.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await axios.post("YOUR_SERVER_ENDPOINT", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("File uploaded successfully", response.data);
+    } catch (error) {
+      console.error("Error uploading file", error);
+    }
+  };
+
   return <>
     <div className={"flex flex-row flex-nowrap items-center gap-3"}>
       <Button
+        onClick={() => {
+          if (!inputFileRef.current) return;
+          inputFileRef.current.click();
+        }}
         size={"lg"}
         isIconOnly
         className={"bg-Nero bg-opacity-10 border-1 border-opacity-10"}
@@ -64,6 +90,11 @@ const Form = () => {
         aria-label="Upload file">
         <ClipIcon />
       </Button>
+      <Input
+        type="file"
+        ref={inputFileRef}
+        onInput={handleFileChange}
+        className={"hidden"} />
       <Input
         size={"lg"}
         variant={"faded"}
