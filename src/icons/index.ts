@@ -5,3 +5,5 @@ export * from "./Verify.icon.tsx";
 export * from "./Copy.icon.tsx";
 export * from "./Warning.icon.tsx";
 export * from "./Check.icon.tsx";
+export * from "./Eye.icon.tsx";
+export * from "./Dots.icon.tsx";

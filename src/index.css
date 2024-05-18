@@ -31,6 +31,34 @@
 }
 
 
+@font-face {
+    font-family: "MTSCompact";
+    src: url("../public/fonts/MTSCompact-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MTSCompact";
+    src: url("../public/fonts/MTSCompact-Medium.ttf") format("truetype");
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MTSCompact";
+    src: url("../public/fonts/MTSCompact-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "MTSCompact";
+    src: url("../public/fonts/MTSCompact-Black.ttf") format("truetype");
+    font-weight: 900;
+    font-style: normal;
+}
+
 :root {
     font-family: MTSExtended, Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     color-scheme: dark;
