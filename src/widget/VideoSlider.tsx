@@ -14,13 +14,6 @@ export const VideoSlider = () => {
         "limit": 12,
         "offset": Math.ceil(Math.random() * 100),
       },
-      headers: {
-        "accept": "application/json",
-        "x-device-screen": "1440 + ' x ' + 900",
-        "x-locale": "ru",
-        "x-request-id": "qof7n2oiewi9tjjnnqgrii8t",
-        "x-timezone": "GMT+0300",
-      },
     }).then((response) => {
       setVideos(response.data.result.list ?? []);
     });

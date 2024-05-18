@@ -1,5 +1,5 @@
 import { Card, CardFooter, CardHeader, Image, Link, User } from "@nextui-org/react";
-import { EyeIcon } from "../icons";
+import { DotsIcon, EyeIcon } from "../icons";
 
 export interface IVideoCardProps {
   views: number;
@@ -18,14 +18,17 @@ function stringifyNumber(value: number): string {
 
 
 export const VideoCard = ({ views, preview, channelLogo, channelName, link }: IVideoCardProps) => {
-  return <Link href={link} target={"_blank"}>
-    <Card className={"w-[160px] h-[284px] flex-shrink-0 font-MTSCompact relative"}>
-      <CardHeader className="absolute z-20 top-1 flex-col !items-start">
-        <div className="text-tiny text-Nero uppercase font-medium flex flex-row flex-nowrap gap-1">
-          <EyeIcon />
-          {stringifyNumber(views)}
-        </div>
-      </CardHeader>
+  return <Card className={"w-[160px] h-[284px] flex-shrink-0 font-MTSCompact relative"}>
+    <CardHeader className="absolute z-20 top-1 items-center flex flex-row justify-between">
+      <div className="text-tiny text-Nero uppercase font-medium flex flex-row flex-nowrap gap-1">
+        <EyeIcon />
+        {stringifyNumber(views)}
+      </div>
+      <div className={"p-1 cursor-pointer rounded-full hover:bg-Nero hover:bg-opacity-20"}>
+        <DotsIcon />
+      </div>
+    </CardHeader>
+    <Link href={link} target={"_blank"} className={"h-full w-full"}>
       <div className={"bg-gradient-to-t from-[#181818] h-1/3 w-full absolute bottom-0 z-10"} />
       <div className={"bg-gradient-to-b from-[#181818] h-1/3 w-full absolute top-0 z-10"} />
       <Image
@@ -48,6 +51,6 @@ export const VideoCard = ({ views, preview, channelLogo, channelName, link }: IV
           }}
         />
       </CardFooter>
-    </Card>
-  </Link>;
+    </Link>
+  </Card>;
 };
