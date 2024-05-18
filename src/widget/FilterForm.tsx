@@ -101,9 +101,13 @@ const Form = () => {
       />
     </div>
     <Button
-      disabled={isInvalid}
+      disabled={isInvalid || link === ""}
       size={"lg"}
-      onClick={onOpen}
+      onClick={() => {
+        const valid = validURL(link);
+        setIsInvalid(!valid);
+        if (valid) onOpen();
+      }}
       className={"bg-ElectricViolet text-Nero font-[16px] font-bold disabled:text-SilverChalice disabled:bg-Nero disabled:bg-opacity-10"}
       variant="flat"
       aria-label="Start check">
