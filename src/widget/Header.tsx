@@ -11,11 +11,11 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ArrowLeftIcon } from "../icons";
 
 const items = {
-  "Владимир Матлахов": "#",
+  "Владимир Матлахов": "https://t.me/h0vvian",
   "Герман Багдасарян": "https://t.me/debagi4",
-  "Иван Шкель": "#",
-  "Эдуард Захарян": "#",
-  "Глеб Мисюк": "#",
+  "Иван Шкель": "https://t.me/lopharb",
+  "Эдуард Захарян": "https://t.me/zakharyan_1",
+  "Глеб Мисюк": "https://t.me/G_MISYUK",
 };
 
 export const Header = () => {

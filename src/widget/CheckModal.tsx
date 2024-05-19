@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Spinner } from "@nextui-org/react";
 import { Gauge } from "../components";
 import cn from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -9,6 +9,7 @@ import axios from "axios";
 export const CheckModal = ({ link, disclosure }: { link: string; disclosure: UseDisclosureReturn }) => {
   const { isOpen, onOpenChange } = disclosure;
   const [videoSafeResult, setVideoSafeResult] = useState(0);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     checkVideo().then();
@@ -30,6 +31,7 @@ export const CheckModal = ({ link, disclosure }: { link: string; disclosure: Use
         const res = sum / response.data.length;
         if (res >= 90) return setVideoSafeResult(Math.ceil(res));
         setVideoSafeResult(Math.max(0, Math.ceil(res / 3)));
+        setLoading(false);
       });
   };
 
@@ -117,10 +119,11 @@ export const CheckModal = ({ link, disclosure }: { link: string; disclosure: Use
               {cavVisitVideo ? "Перейти к видео" : "Небезопасно"}
             </Button>
             <Button
+              disabled={isLoading}
               className={"bg-none text-white text-[16px] font-bold w-full"}
               variant="light"
               onPress={checkVideo}>
-              Перепроверить
+              {isLoading ? <Spinner color={"default"} /> : "Перепроверить"}
             </Button>
           </ModalFooter>
         </>
