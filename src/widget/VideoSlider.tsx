@@ -5,20 +5,20 @@ import { CheckModal } from "./CheckModal.tsx";
 
 const items: { preview: string; link: string; views: number }[] = [
   {
-    preview: "/videoFilter/public/Preview1.png",
-    link: "/videoFilter/public/Video1.mp4",
+    preview: "/videoFilter/Preview1.png",
+    link: "/videoFilter/Video1.mp4",
     views: 130013,
   }, {
-    preview: "/videoFilter/public/Preview2.png",
-    link: "/videoFilter/public/Video2.mp4",
+    preview: "/videoFilter/Preview2.png",
+    link: "/videoFilter/Video2.mp4",
     views: 42003,
   }, {
-    preview: "/videoFilter/public/Preview3.png",
-    link: "/videoFilter/public/Video3.mp4",
+    preview: "/videoFilter/Preview3.png",
+    link: "/videoFilter/Video3.mp4",
     views: 2130013,
   }, {
-    preview: "/videoFilter/public/Preview4.png",
-    link: "/videoFilter/public/Video4.mp4",
+    preview: "/videoFilter/Preview4.png",
+    link: "/videoFilter/Video4.mp4",
     views: 230013,
   },
 ];
@@ -46,7 +46,7 @@ export const VideoSlider = () => {
             key={index}
           >
             <VideoCard
-              channelLogo={"/videoFilter/public/logo.svg"}
+              channelLogo={"/videoFilter/logo.svg"}
               channelName={"ScreenSheriff"}
               preview={video.preview}
               views={video.views}
