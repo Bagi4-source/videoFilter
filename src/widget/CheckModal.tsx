@@ -16,7 +16,7 @@ export const CheckModal = ({ link, disclosure }: { link: string; disclosure: Use
   const [videoSafeResult, setVideoSafeResult] = useState(0);
 
   const cavVisitVideo = useMemo(() => {
-    return videoSafeResult > 90;
+    return videoSafeResult >= 90;
   }, [videoSafeResult]);
 
   const checkVideo = useCallback(() => {
