@@ -9,15 +9,6 @@ export default defineConfig({
     minify: "esbuild",
   },
   base: "/videoFilter/",
-  server: {
-    proxy: {
-      "/checkImages": {
-        secure: false,
-        target: "http://fktpm.k-lab.su/checkImages",
-        changeOrigin: true,
-      },
-    },
-  },
   plugins: [
     react(),
     VitePWA({

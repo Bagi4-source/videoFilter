@@ -16,7 +16,7 @@ export const CheckModal = ({ link, disclosure }: { link: string; disclosure: Use
 
   const handleCheck = async (images: string[]) => {
     const t = new Date().valueOf();
-    axios.post<{ safe: number }[]>("/checkImages", {
+    axios.post<{ safe: number }[]>("https://fktpm.k-lab.su/checkImages", {
       images,
     })
       .then((response) => {
