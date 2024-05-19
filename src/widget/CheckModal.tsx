@@ -4,26 +4,82 @@ import cn from "classnames";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UseDisclosureReturn } from "@nextui-org/use-disclosure";
+import axios from "axios";
 
 export const CheckModal = ({ link, disclosure }: { link: string; disclosure: UseDisclosureReturn }) => {
   const { isOpen, onOpenChange } = disclosure;
+  const [videoSafeResult, setVideoSafeResult] = useState(0);
 
   useEffect(() => {
-    checkVideo();
+    checkVideo().then();
   }, []);
 
+  const handleCheck = async (images: string[]) => {
+    const t = new Date().valueOf();
+    axios.post<{ safe: number }[]>("http://fktpm.k-lab.su/checkImages", {
+      images,
+    })
+      .then((response) => {
+        console.log("Success checked. Time: ", new Date().valueOf() - t, "ms");
+        const len = response.data.length;
+        if (len === 0) return setVideoSafeResult(0);
+
+        const sum = response.data.reduce((acc: number, item) => {
+          return acc + item.safe * 100;
+        }, 0);
+        const res = sum / response.data.length;
+        if (res >= 90) return setVideoSafeResult(Math.ceil(res));
+        setVideoSafeResult(Math.max(0, Math.ceil(res / 3)));
+      });
+  };
+
+  async function captureVideoFrame(videoUrl: string) {
+    const video = document.createElement("video");
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const results: string[] = [];
+    const times = [0];
+
+    video.src = videoUrl;
+    video.crossOrigin = "anonymous";
+
+    video.addEventListener("loadeddata", function() {
+      const duration = video.duration;
+      times.push(duration / 3);
+      times.push(duration / 2);
+      times.push(2 * duration / 3);
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      captureNextFrame();
+    });
+
+    function captureNextFrame() {
+      if (times.length === 0) {
+        handleCheck(results);
+        video.remove();
+        canvas.remove();
+        return;
+      }
+      const time = times.shift();
+      if (time === undefined) return;
+      video.currentTime = time;
+    }
+
+    video.addEventListener("seeked", function() {
+      context?.drawImage(video, 0, 0, canvas.width, canvas.height);
+      results.push(canvas.toDataURL("image/png"));
+      captureNextFrame();
+    });
+  }
+
   const navigate = useNavigate();
-  const [videoSafeResult, setVideoSafeResult] = useState(0);
 
   const cavVisitVideo = useMemo(() => {
     return videoSafeResult >= 90;
   }, [videoSafeResult]);
 
-  const checkVideo = useCallback(() => {
-    console.log(link);
-    const safeResult = Math.random() * 50 + 50;
-    const result = Math.min(Math.ceil(safeResult), 100);
-    setVideoSafeResult(result);
+  const checkVideo = useCallback(async () => {
+    await captureVideoFrame(link);
   }, [link]);
 
   return <Modal

@@ -1,26 +1,32 @@
 import { ScrollShadow, useDisclosure } from "@nextui-org/react";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { IFeedData, List } from "../types/Feed.type.ts";
+import { useState } from "react";
 import { VideoCard } from "../components";
 import { CheckModal } from "./CheckModal.tsx";
+
+const items: { preview: string; link: string; views: number }[] = [
+  {
+    preview: "/videoFilter/public/Preview1.png",
+    link: "/videoFilter/public/Video1.mp4",
+    views: 130013,
+  }, {
+    preview: "/videoFilter/public/Preview2.png",
+    link: "/videoFilter/public/Video2.mp4",
+    views: 42003,
+  }, {
+    preview: "/videoFilter/public/Preview3.png",
+    link: "/videoFilter/public/Video3.mp4",
+    views: 2130013,
+  }, {
+    preview: "/videoFilter/public/Preview4.png",
+    link: "/videoFilter/public/Video4.mp4",
+    views: 230013,
+  },
+];
 
 export const VideoSlider = () => {
   const disclosure = useDisclosure();
   const [link, setLink] = useState("");
-  const [videos, setVideos] = useState<List[]>([]);
 
-  useEffect(() => {
-    axios.get<IFeedData>("https://nuum.ru/api/v2/main/clips/feed", {
-      params: {
-        "category": "all",
-        "limit": 12,
-        "offset": Math.ceil(Math.random() * 100),
-      },
-    }).then((response) => {
-      setVideos(response.data.result.list ?? []);
-    });
-  }, []);
   return <section className={"container mx-auto px-4 py-4"}>
     <h2 className={"font-black text-[20px]"}>Демо-ролики</h2>
     <ScrollShadow
@@ -31,19 +37,21 @@ export const VideoSlider = () => {
     >
       <div className={"flex flex-row flex-nowrap gap-4 w-full"}>
         {
-          videos.map((video, index) => <div
+          items.map((video, index) => <div
+            className={"cursor-pointer"}
             onClick={() => {
-              setLink(video.media_container_streams[0].stream_media[0].media_meta.media_archive_url ?? "");
+              setLink(video.link);
               disclosure.onOpen();
             }}
             key={index}
-          ><VideoCard
-            channelLogo={video.media_container_channel.channel_image.small ?? ""}
-            channelName={video.media_container_channel.channel_name ?? ""}
-            preview={video.media_container_streams[0].stream_media[0].media_meta.media_preview_archive_images.small ?? ""}
-            views={video.media_container_streams[0].stream_total_viewers ?? 0}
-            link={"https://nuum.ru/clips/" + video.media_container_id}
-            key={index} /></div>)
+          >
+            <VideoCard
+              channelLogo={"/videoFilter/public/logo.svg"}
+              channelName={"ScreenSheriff"}
+              preview={video.preview}
+              views={video.views}
+              key={index} />
+          </div>)
         }
       </div>
     </ScrollShadow>

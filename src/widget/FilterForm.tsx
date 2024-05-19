@@ -60,7 +60,7 @@ const Form = () => {
   };
 
   return <>
-    <div className={"flex flex-row flex-nowrap items-center gap-3"}>
+    <div className={"md:col-span-2 lg:col-span-3 md:order-3 flex flex-row flex-nowrap items-center gap-3"}>
       <Button
         onClick={() => {
           if (!inputFileRef.current) return;
@@ -124,7 +124,7 @@ const Form = () => {
           disclosure.onOpen();
         }
       }}
-      className={"bg-ElectricViolet text-Nero font-[16px] font-bold disabled:text-SilverChalice disabled:bg-Nero disabled:bg-opacity-10"}
+      className={"md:col-span-2 lg:col-span-1 md:order-4 bg-ElectricViolet text-Nero font-[16px] font-bold disabled:text-SilverChalice disabled:bg-Nero disabled:bg-opacity-10"}
       variant="flat"
       aria-label="Start check">
       Запустить проверку
@@ -134,8 +134,9 @@ const Form = () => {
 };
 
 export const FilterForm = () => {
-  return <section className={"py-4 px-4 flex flex-col gap-6 container mx-auto"}>
-    <Card className={"bg-ShuttleGray text-Nero flex flex-row flex-nowrap items-center gap-6 p-5"}>
+  return <section className={"py-4 md:pb-8 px-4 grid grid-cols-1 md:grid-cols-4 gap-6 container mx-auto"}>
+    <Card
+      className={"col-span-1 md:col-span-2 md:order-1 bg-ShuttleGray text-Nero flex flex-row flex-nowrap items-center gap-6 p-5"}>
       <div className={"p-1"}>
         <InfoIcon />
       </div>
@@ -144,7 +145,8 @@ export const FilterForm = () => {
       </div>
     </Card>
     <Form />
-    <Card className={"bg-Tundora text-Nero flex flex-row flex-nowrap items-center gap-6 p-5"}>
+    <Card
+      className={"col-span-1 md:col-span-2 md:order-2 bg-Tundora text-Nero flex flex-row flex-nowrap items-center gap-6 p-5"}>
       <div className={"p-1"}>
         <VerifyIcon />
       </div>
