@@ -16,12 +16,12 @@ export const CheckModal = ({ link, disclosure }: { link: string; disclosure: Use
   const [videoSafeResult, setVideoSafeResult] = useState(0);
 
   const cavVisitVideo = useMemo(() => {
-    return videoSafeResult > 30;
+    return videoSafeResult > 90;
   }, [videoSafeResult]);
 
   const checkVideo = useCallback(() => {
     console.log(link);
-    const safeResult = Math.random() * 100;
+    const safeResult = Math.random() * 50 + 50;
     const result = Math.min(Math.ceil(safeResult), 100);
     setVideoSafeResult(result);
   }, [link]);

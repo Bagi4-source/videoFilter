@@ -17,7 +17,7 @@ export const ViewPage = () => {
           // light
           pip
           controls
-          height={"100%"}
+          height={"30vh"}
           width={"100%"}
           url={videoUrl} />
       </div>}
