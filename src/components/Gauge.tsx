@@ -12,8 +12,7 @@ export const Gauge = ({ value }: IGaugeProps) => {
       padding: 0.02,
       subArcs:
         [
-          { limit: 60 },
-          { limit: 80 },
+          { limit: 70 },
           { limit: 90 },
           {},
         ],

@@ -7,3 +7,4 @@ export * from "./Warning.icon.tsx";
 export * from "./Check.icon.tsx";
 export * from "./Eye.icon.tsx";
 export * from "./Dots.icon.tsx";
+export * from "./ArrowLeft.icon.tsx";

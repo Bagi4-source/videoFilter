@@ -7,6 +7,8 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import cn from "classnames";
+import { useLocation, useNavigate } from "react-router-dom";
+import { ArrowLeftIcon } from "../icons";
 
 const items = {
   "Владимир Матлахов": "#",
@@ -17,6 +19,8 @@ const items = {
 };
 
 export const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return <section>
@@ -31,7 +35,19 @@ export const Header = () => {
     >
       <NavbarContent className="md:hidden">
         <div className={"sm:px-4 container mx-auto flex flex-row flex-nowrap justify-between items-center"}>
-          <h2 className={"font-black text-[20px] pt-1"}>{isMenuOpen ? "Над кейсом работали" : "Проверка видео"}</h2>
+          {location.pathname !== "/videoFilter/" && !isMenuOpen && <div
+            className={"flex flex-row flex-nowrap items-center gap-1 cursor-pointer"}
+            onClick={() => {
+              navigate(`/videoFilter/`);
+            }}
+          >
+            <ArrowLeftIcon />
+            <span className={"pt-1 font-medium text-[16px] text-SilverChalice"}>Назад</span>
+          </div>}
+          <Link href={"/"} className={"text-Nero"}>
+            <h2
+              className={"font-black text-[20px] pt-1"}>{isMenuOpen ? "Над кейсом работали" : location.pathname === "/videoFilter/" ? "Проверка видео" : "Просмотр"}</h2>
+          </Link>
           <NavbarMenuToggle
             className={cn("p-4 scale-125")}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"} />

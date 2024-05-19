@@ -2,22 +2,17 @@ import {
   Button,
   Card,
   Input,
-  Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
 import { CheckIcon, ClipIcon, CopyIcon, InfoIcon, VerifyIcon, WarningIcon } from "../icons";
 import { FormEvent, useCallback, useRef, useState } from "react";
 import cn from "classnames";
-import { Gauge } from "../components";
 import axios from "axios";
+import { CheckModal } from "./CheckModal.tsx";
 
 function validURL(str: string) {
   if (str === "") return true;
-  const pattern = new RegExp("^(https?:\\/\\/)?" + // protocol
+  const pattern = new RegExp("^(blob:)?(https?:\\/\\/)?" + // protocol
     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
     "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
     "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
@@ -35,7 +30,7 @@ const CheckContent = ({ isInvalid }: { isInvalid: boolean }) => {
 };
 
 const Form = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const disclosure = useDisclosure();
   const [link, setLink] = useState("");
   const [isInvalid, setIsInvalid] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
@@ -62,18 +57,7 @@ const Form = () => {
     const file = e.currentTarget.files[0];
     if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
-    try {
-      const response = await axios.post("YOUR_SERVER_ENDPOINT", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("File uploaded successfully", response.data);
-    } catch (error) {
-      console.error("Error uploading file", error);
-    }
+    setLink(URL.createObjectURL(file));
   };
 
   return <>
@@ -137,45 +121,16 @@ const Form = () => {
       onClick={() => {
         const valid = validURL(link);
         setIsInvalid(!valid);
-        if (valid) onOpen();
+        if (valid) {
+          disclosure.onOpen();
+        }
       }}
       className={"bg-ElectricViolet text-Nero font-[16px] font-bold disabled:text-SilverChalice disabled:bg-Nero disabled:bg-opacity-10"}
       variant="flat"
       aria-label="Start check">
       Запустить проверку
     </Button>
-    <Modal
-      isOpen={isOpen}
-      backdrop={"blur"}
-      onOpenChange={onOpenChange}
-      className={"bg-CodGray"}
-    >
-      <ModalContent className={"p-2"}>
-        {(onClose) => (
-          <>
-            <ModalHeader className={"font-black text-[20px]"}>
-              Результат
-            </ModalHeader>
-            <ModalBody className={"flex flex-col gap-2 items-center"}>
-              <div className={"text-[14px] w-full"}>Насколько видео безопасно для детей?</div>
-              <div className={"w-full -translate-x-1"}>
-                <Gauge value={95} />
-              </div>
-              <div className={"text-[18px] font-medium"}>Дата последней проверки</div>
-              <div className={"text-[16px]"}>19 мая 2024 года в 02:24</div>
-            </ModalBody>
-            <ModalFooter className={"flex flex-col gap-2 items-center"}>
-              <Button className={"bg-ElectricViolet text-white text-[16px] font-bold w-full"} onPress={onClose}>
-                Перейти к видео
-              </Button>
-              <Button className={"bg-none text-white text-[16px] font-bold w-full"} variant="light" onPress={onClose}>
-                Перепроверить
-              </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
-    </Modal>
+    <CheckModal link={link} disclosure={disclosure} />
   </>;
 };
 

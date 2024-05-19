@@ -1,4 +1,4 @@
-import { Card, CardFooter, CardHeader, Image, Link, User } from "@nextui-org/react";
+import { Card, CardFooter, CardHeader, Image, User } from "@nextui-org/react";
 import { DotsIcon, EyeIcon } from "../icons";
 
 export interface IVideoCardProps {
@@ -17,7 +17,7 @@ function stringifyNumber(value: number): string {
 }
 
 
-export const VideoCard = ({ views, preview, channelLogo, channelName, link }: IVideoCardProps) => {
+export const VideoCard = ({ views, preview, channelLogo, channelName }: IVideoCardProps) => {
   return <Card className={"w-[160px] h-[284px] flex-shrink-0 font-MTSCompact relative"}>
     <CardHeader className="absolute z-20 top-1 items-center flex flex-row justify-between">
       <div className="text-tiny text-Nero uppercase font-medium flex flex-row flex-nowrap gap-1">
@@ -28,29 +28,27 @@ export const VideoCard = ({ views, preview, channelLogo, channelName, link }: IV
         <DotsIcon />
       </div>
     </CardHeader>
-    <Link href={link} target={"_blank"} className={"h-full w-full"}>
-      <div className={"bg-gradient-to-t from-[#181818] h-1/3 w-full absolute bottom-0 z-10"} />
-      <div className={"bg-gradient-to-b from-[#181818] h-1/3 w-full absolute top-0 z-10"} />
-      <Image
-        width={160}
-        height={284}
-        removeWrapper
-        alt="video preview"
-        className={"z-0 w-full h-full object-cover shadow-[inset_0_0_15px_10px_rgba(0,0,0,1)]"}
-        src={preview}
+    <div className={"bg-gradient-to-t from-[#181818] h-1/3 w-full absolute bottom-0 z-10"} />
+    <div className={"bg-gradient-to-b from-[#181818] h-1/3 w-full absolute top-0 z-10"} />
+    <Image
+      width={160}
+      height={284}
+      removeWrapper
+      alt="video preview"
+      className={"z-0 w-full h-full object-cover shadow-[inset_0_0_15px_10px_rgba(0,0,0,1)]"}
+      src={preview}
+    />
+    <CardFooter className="absolute z-20 bottom-1 flex-col !items-start">
+      <User
+        name={channelName}
+        avatarProps={{
+          src: channelLogo,
+          size: "sm",
+        }}
+        classNames={{
+          name: "text-tiny text-Nero font-medium text-ellipsis overflow-hidden",
+        }}
       />
-      <CardFooter className="absolute z-20 bottom-1 flex-col !items-start">
-        <User
-          name={channelName}
-          avatarProps={{
-            src: channelLogo,
-            size: "sm",
-          }}
-          classNames={{
-            name: "text-tiny text-Nero font-medium text-ellipsis overflow-hidden",
-          }}
-        />
-      </CardFooter>
-    </Link>
+    </CardFooter>
   </Card>;
 };
