@@ -7,7 +7,6 @@ import {
 import { CheckIcon, ClipIcon, CopyIcon, InfoIcon, VerifyIcon, WarningIcon } from "../icons";
 import { FormEvent, useCallback, useRef, useState } from "react";
 import cn from "classnames";
-import axios from "axios";
 import { CheckModal } from "./CheckModal.tsx";
 
 function validURL(str: string) {
